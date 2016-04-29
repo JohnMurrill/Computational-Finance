@@ -1,0 +1,437 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.2' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     17965,        427]
+NotebookOptionsPosition[     17376,        402]
+NotebookOutlinePosition[     17719,        417]
+CellTagsIndexPosition[     17676,        414]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"PAYOUTSTRUCTURE", " ", "=", " ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"5", ",", "5"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "10"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"10", ",", "0"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"1", ",", "1"}], "}"}]}], "}"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"CalculateFitnessMemoryZero", "[", "prisonStrategy_", "]"}], ":=",
+     "\[IndentingNewLine]", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "expectedPayoutCoop", ",", "expectedPayoutDef", ",", "payouts"}], 
+       "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"expectedPayoutCoop", "=", 
+        RowBox[{
+         RowBox[{"prisonStrategy", "[", 
+          RowBox[{"[", "1", "]"}], "]"}], "*", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"PAYOUTSTRUCTURE", "[", 
+             RowBox[{"[", "1", "]"}], "]"}], "[", 
+            RowBox[{"[", "1", "]"}], "]"}], "+", 
+           RowBox[{
+            RowBox[{"PAYOUTSTRUCTURE", "[", 
+             RowBox[{"[", "2", "]"}], "]"}], "[", 
+            RowBox[{"[", "1", "]"}], "]"}]}], ")"}]}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"expectedPayoutDef", "=", 
+        RowBox[{
+         RowBox[{"prisonStrategy", "[", 
+          RowBox[{"[", "2", "]"}], "]"}], "*", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"PAYOUTSTRUCTURE", "[", 
+             RowBox[{"[", "3", "]"}], "]"}], "[", 
+            RowBox[{"[", "1", "]"}], "]"}], "+", 
+           RowBox[{
+            RowBox[{"PAYOUTSTRUCTURE", "[", 
+             RowBox[{"[", "4", "]"}], "]"}], "[", 
+            RowBox[{"[", "1", "]"}], "]"}]}], ")"}]}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"Return", "[", 
+        RowBox[{"{", 
+         RowBox[{"expectedPayoutCoop", ",", "expectedPayoutDef"}], "}"}], 
+        "]"}]}]}], "\[IndentingNewLine]", "]"}]}], ";"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"MutationDistribution", "=", 
+   RowBox[{"TruncatedDistribution", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"0", ",", "1"}], "}"}], ",", 
+     RowBox[{"NormalDistribution", "[", 
+      RowBox[{"\[Mu]", ",", "\[Sigma]"}], "]"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"Mutation", "[", 
+     RowBox[{"prisonStrategy_", ",", "mutationDeviation_"}], "]"}], ":=", 
+    "\[IndentingNewLine]", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "chanceOfMutation", ",", "newDefect", ",", "inputStrategy", ",", 
+        "temp", ",", "newPrisonStrat", ",", "newCoop", ",", "mutatedStrat"}], 
+       "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"inputStrategy", "=", "prisonStrategy"}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"chanceOfMutation", "=", 
+        RowBox[{"RandomReal", "[", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "1"}], "}"}], "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"newPrisonStrat", "=", 
+        RowBox[{"Which", "[", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"chanceOfMutation", "\[LessEqual]", "0.2"}], ",", 
+          "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"temp", "=", 
+            RowBox[{"inputStrategy", "[", 
+             RowBox[{"[", "1", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+           RowBox[{"newCoop", "=", 
+            RowBox[{"RandomVariate", "[", 
+             RowBox[{"MutationDistribution", "/.", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"\[Mu]", "\[Rule]", 
+                 RowBox[{"inputStrategy", "[", 
+                  RowBox[{"[", "1", "]"}], "]"}]}], ",", 
+                RowBox[{"\[Sigma]", "\[Rule]", "mutationDeviation"}]}], 
+               "}"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+           RowBox[{"newDefect", "=", 
+            RowBox[{
+             RowBox[{"inputStrategy", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "+", 
+             RowBox[{"(", 
+              RowBox[{"temp", "-", "newCoop"}], ")"}]}]}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{"newDefect", "<", "0"}], ",", "\[IndentingNewLine]", 
+             RowBox[{"newDefect", "=", "0"}]}], "\[IndentingNewLine]", "]"}], 
+           ";", "\[IndentingNewLine]", 
+           RowBox[{"{", 
+            RowBox[{"newCoop", ",", "newDefect"}], "}"}]}], ",", 
+          "\[IndentingNewLine]", 
+          RowBox[{"chanceOfMutation", "\[GreaterEqual]", "0.2"}], ",", 
+          "\[IndentingNewLine]", "inputStrategy"}], "\[IndentingNewLine]", 
+         "]"}]}]}]}], "\[IndentingNewLine]", "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"MakeStratChoice", "[", "payoutForStrat_", "]"}], ":=", 
+    "\[IndentingNewLine]", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"Max", "[", "payoutForStrat", "]"}], "\[Equal]", 
+         RowBox[{"payoutForStrat", "[", 
+          RowBox[{"[", "1", "]"}], "]"}]}], ",", "\[IndentingNewLine]", 
+        RowBox[{"Return", "[", "\"\<C\>\"", "]"}], ",", "\[IndentingNewLine]", 
+        RowBox[{"Return", "[", "\"\<D\>\"", "]"}]}], "\[IndentingNewLine]", 
+       "]"}]}], "\[IndentingNewLine]", "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"GenerateStrategeyTable", "[", "numStrats_", "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", "values", "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"values", " ", "=", " ", 
+      RowBox[{"Table", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"N", "@", 
+          RowBox[{"RandomChoice", "[", 
+           RowBox[{"IntegerPartitions", "[", 
+            RowBox[{"1000", ",", 
+             RowBox[{"{", "2", "}"}]}], "]"}], "]"}]}], "/", "1000"}], ",", 
+        "numStrats"}], "]"}]}]}], "\[IndentingNewLine]", "]"}]}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.657896813848946*^9, 3.657896835098854*^9}, {
+   3.657896956796671*^9, 3.65789698165728*^9}, {3.6578971461688137`*^9, 
+   3.657897233172333*^9}, {3.657897265429056*^9, 3.657897287225543*^9}, {
+   3.657898006221878*^9, 3.657898035245558*^9}, {3.657898451069105*^9, 
+   3.6578984646547594`*^9}, {3.6578985135351896`*^9, 
+   3.6578986413005342`*^9}, {3.657898737380137*^9, 3.657898739137394*^9}, {
+   3.6578988520611115`*^9, 3.6578989045713573`*^9}, {3.6578989640696383`*^9, 
+   3.6578990123973045`*^9}, {3.6578990447826786`*^9, 3.657899050884018*^9}, {
+   3.6578990823173485`*^9, 3.657899094206797*^9}, {3.6578991400700445`*^9, 
+   3.6578992395842686`*^9}, {3.657899764013359*^9, 3.6578998522697954`*^9}, 
+   3.6578999045047116`*^9, {3.6579000145510044`*^9, 3.657900031987117*^9}, {
+   3.657905196069815*^9, 3.6579053014050927`*^9}, {3.657905868187699*^9, 
+   3.657905913505917*^9}, {3.657905999077701*^9, 3.657906000247532*^9}, {
+   3.6579063596594796`*^9, 3.6579064616895447`*^9}, {3.6579065635719604`*^9, 
+   3.6579065702957325`*^9}, {3.657906606689372*^9, 3.657906674281576*^9}, {
+   3.657906711645108*^9, 3.657906718168743*^9}, {3.657906750385649*^9, 
+   3.657906763353855*^9}, {3.65790679716374*^9, 3.6579069597808313`*^9}, {
+   3.6579070912201977`*^9, 3.657907137183857*^9}, {3.6579072723862715`*^9, 
+   3.6579072878292613`*^9}, {3.657907318451003*^9, 3.6579073305941415`*^9}, {
+   3.6579073655884495`*^9, 3.6579073946390934`*^9}, {3.6579074909765425`*^9, 
+   3.6579075329213476`*^9}, {3.6579075769973907`*^9, 
+   3.6579075835020127`*^9}, {3.657907626922867*^9, 3.6579076797878017`*^9}, {
+   3.657907838149324*^9, 3.6579078441346064`*^9}, {3.6579079574599137`*^9, 
+   3.657907964015566*^9}, {3.6579080360643477`*^9, 3.657908110981286*^9}, {
+   3.657908173878978*^9, 3.6579081741811934`*^9}, {3.657908217869235*^9, 
+   3.657908226554486*^9}, {3.657908262250861*^9, 3.6579082630194063`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"strats", "=", 
+   RowBox[{"GenerateStrategeyTable", "[", "10", "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Table", "[", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Mutation", "[", 
+     RowBox[{
+      RowBox[{"strats", "[", 
+       RowBox[{"[", "i", "]"}], "]"}], ",", "0.3"}], "]"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"{", 
+     RowBox[{"i", ",", "1", ",", "10"}], "}"}]}], "\[IndentingNewLine]", 
+   "]"}], "//", "MatrixForm"}]}], "Input",
+ CellChangeTimes->{{3.657898656901851*^9, 3.6578986844694195`*^9}, {
+  3.6578987203879433`*^9, 3.6578987441919923`*^9}, {3.657899024009408*^9, 
+  3.657899024651864*^9}, {3.6578991813719234`*^9, 3.6578991878625193`*^9}, {
+  3.657899247144003*^9, 3.657899346421824*^9}, {3.6578998807380247`*^9, 
+  3.657899913618202*^9}, {3.657899965501721*^9, 3.657899966253256*^9}, {
+  3.657900048792061*^9, 3.657900062143503*^9}, {3.6579051157752495`*^9, 
+  3.657905143819703*^9}, {3.6579053122057467`*^9, 3.657905353273468*^9}, {
+  3.657907893207262*^9, 3.6579079219957085`*^9}, {3.657908308315584*^9, 
+  3.6579083091801896`*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {"0.973`", "0.027`"},
+     {"0.8320000000000001`", "0.168`"},
+     {"0.84`", "0.16`"},
+     {"0.135370811618803`", "0.8646291883811971`"},
+     {"0.5730000000000001`", "0.427`"},
+     {"0.633`", "0.367`"},
+     {"0.4573658888692379`", "0.5426341111307621`"},
+     {"0.85`", "0.15`"},
+     {"0.77`", "0.23`"},
+     {"0.664`", "0.336`"}
+    },
+    GridBoxAlignment->{
+     "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, "Rows" -> {{Baseline}}, 
+      "RowsIndexed" -> {}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.7]}, 
+        Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}],
+  Function[BoxForm`e$, 
+   MatrixForm[BoxForm`e$]]]], "Output",
+ CellChangeTimes->{
+  3.6578986848286753`*^9, {3.65789872169487*^9, 3.657898744480199*^9}, 
+   3.657898908398075*^9, {3.6578990163739834`*^9, 3.657899025152233*^9}, 
+   3.6578991893876204`*^9, {3.6578992501851635`*^9, 3.6578992953325253`*^9}, {
+   3.657899330493509*^9, 3.6578993467560816`*^9}, 3.6578998443691826`*^9, {
+   3.657899884237421*^9, 3.65789991401647*^9}, 3.6578999666925864`*^9, {
+   3.6579000358939075`*^9, 3.6579000624887505`*^9}, {3.6579050990788355`*^9, 
+   3.6579051494026527`*^9}, {3.657905317661617*^9, 3.6579053537587833`*^9}, {
+   3.6579078949955344`*^9, 3.6579079226271553`*^9}, 3.657908118460602*^9, 
+   3.657908180583742*^9, 3.657908231964327*^9, {3.6579082953753996`*^9, 
+   3.6579083098046317`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"populationSize", "=", "100"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"initialStrats", "=", 
+   RowBox[{"GenerateStrategeyTable", "[", "populationSize", "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"mutability", "=", "0.3"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"resultingPopulation", "=", 
+   RowBox[{"ConstantArray", "[", 
+    RowBox[{"0", ",", "populationSize"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"generations", "=", "100"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Do", "[", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Do", "[", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"profileOne", " ", "=", 
+         RowBox[{"RandomChoice", "[", "initialStrats", "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"profileTwo", " ", "=", 
+         RowBox[{"RandomChoice", "[", "initialStrats", "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"resultingPopulation", "[", 
+          RowBox[{"[", "j", "]"}], "]"}], "=", 
+         RowBox[{"Which", "[", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"Total", "[", 
+             RowBox[{"CalculateFitnessMemoryZero", "[", "profileOne", "]"}], 
+             "]"}], "\[GreaterEqual]", 
+            RowBox[{"Total", "[", 
+             RowBox[{"CalculateFitnessMemoryZero", "[", "profileTwo", "]"}], 
+             "]"}]}], ",", "\[IndentingNewLine]", 
+           RowBox[{"Mutation", "[", 
+            RowBox[{"profileOne", ",", "mutability"}], "]"}], ",", 
+           "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"Total", "[", 
+             RowBox[{"CalculateFitnessMemoryZero", "[", "profileTwo", "]"}], 
+             "]"}], "\[GreaterEqual]", 
+            RowBox[{"Total", "[", 
+             RowBox[{"CalculateFitnessMemoryZero", "[", "profileOne", "]"}], 
+             "]"}]}], ",", "\[IndentingNewLine]", 
+           RowBox[{"Mutation", "[", 
+            RowBox[{"profileTwo", ",", "mutability"}], "]"}]}], 
+          "\[IndentingNewLine]", "]"}]}], ";"}], "\[IndentingNewLine]", ",", 
+       RowBox[{"{", 
+        RowBox[{"j", ",", "1", ",", "populationSize"}], "}"}]}], 
+      "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"initialStrats", "=", "resultingPopulation"}], ";"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"{", 
+     RowBox[{"i", ",", "1", ",", "generations"}], "}"}]}], 
+   "\[IndentingNewLine]", "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.65790539641914*^9, 3.65790560752956*^9}, 
+   3.6579056456516647`*^9, {3.657905698514307*^9, 3.6579058073486457`*^9}, {
+   3.6579061635590777`*^9, 3.6579062318991785`*^9}}],
+
+Cell[BoxData["100"], "Output",
+ CellChangeTimes->{
+  3.6579062324635763`*^9, 3.657906947176878*^9, 3.6579073812275624`*^9, 
+   3.657907538041985*^9, {3.6579082883573947`*^9, 3.657908315798891*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"resultingPopulation", "//", "MatrixForm"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"Table", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"MakeStratChoice", "[", 
+    RowBox[{"resultingPopulation", "[", 
+     RowBox[{"[", "i", "]"}], "]"}], "]"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{"i", ",", "1", ",", "populationSize"}], "}"}]}], 
+  "\[IndentingNewLine]", "]"}]}], "Input",
+ CellChangeTimes->{{3.6579060204949484`*^9, 3.6579061130902*^9}, {
+  3.6579062455168552`*^9, 3.6579062604248805`*^9}, {3.6579083348043947`*^9, 
+  3.657908364152266*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", 
+   ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", 
+   ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"C\"\>", 
+   ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"C\"\>", 
+   ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", 
+   ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", 
+   ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", 
+   ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", 
+   ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", 
+   ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", 
+   ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", 
+   ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", 
+   ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", 
+   ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", 
+   ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", 
+   ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", 
+   ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", 
+   ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", 
+   ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", 
+   ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", 
+   ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", 
+   ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", 
+   ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", 
+   ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", 
+   ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>", ",", "\<\"D\"\>"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{{3.657906021784834*^9, 3.6579060751427655`*^9}, 
+   3.6579061140619087`*^9, {3.657906237261986*^9, 3.6579062607401066`*^9}, {
+   3.657908321046622*^9, 3.65790836467662*^9}}]
+}, Open  ]]
+},
+WindowSize->{1536, 821},
+WindowMargins->{{-8, Automatic}, {Automatic, -8}},
+FrontEndVersion->"10.2 for Microsoft Windows (64-bit) (July 29, 2015)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 8238, 189, 812, "Input"],
+Cell[CellGroupData[{
+Cell[8821, 213, 1130, 24, 112, "Input"],
+Cell[9954, 239, 1619, 36, 176, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[11610, 280, 2752, 63, 412, "Input"],
+Cell[14365, 345, 197, 3, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[14599, 353, 613, 14, 112, "Input"],
+Cell[15215, 369, 2145, 30, 52, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+

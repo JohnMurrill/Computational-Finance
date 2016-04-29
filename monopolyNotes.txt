@@ -1,0 +1,35 @@
+Community Chest Cards:
+
+(1) Advance to Go (Collect $200)  
+(2) Go to jail – go directly to jail – Do not pass Go, do not collect $200 
+
+
+[1] Go to space 0
+[2] Go to space 10
+
+16 cards [2/16 chance of being moved]
+
+Chance list: 
+
+(1) Advance to Go (Collect $200) 
+(2) Advance to Illinois Ave. 
+(3) Advance token to nearest Utility. If unowned, you may buy it from the Bank. If owned, throw dice and pay owner a total ten times the amount thrown. 
+(4) Advance token to the nearest Railroad and pay owner twice the rental to which he/she is otherwise entitled. If Railroad is unowned, you may buy it from the Bank. (There are two of these.) 
+(5) Advance to St. Charles Place – if you pass Go, collect $200  
+(6) Go back 3 spaces 
+(7) Go directly to Jail – do not pass Go, do not collect $200 
+(8) Take a trip to Reading Railroad – if you pass Go collect $200 
+(9) Take a walk on the Boardwalk – advance token to Boardwalk 
+
+
+[1] go to space 0
+[2] go to space 24
+[3] [[7]] = 12 , [[22]] = 28 , [[36]] = 12
+[4] [[7]] = 15 , [[22]] = 25 , [[36]] = 5
+[5] go to space 11
+[6] [[7]] = 4 , [[22]] = 19 , [[36]] = 33
+[7] go to space 10
+[8] go to space 5
+[9] go to space 39
+
+16 cards [9/16 chance of being moved]
